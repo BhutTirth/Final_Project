@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webside Dashboard</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style/data.css">
+
+</head>
+<body>
+
+    <!-- Main Page Container -->
+    <div id="main-page" class="flex flex-col w-full h-screen absolute top-0 left-0">
+        <!-- Taskbar -->
+        <header class="taskbar flex items-center justify-between px-10">
+            <h1 class="text-3xl font-extrabold text-blue-700">DropAlert</h1>
+            <nav class="flex space-x-6">
+                <!-- These links are now static and do not have any JavaScript functionality -->
+                <a href="home.html" data-page="home" class="nav-link text-gray-600">Home</a>
+                <a href="prediction.html" data-page="prediction" class="nav-link text-gray-600">Prediction</a>
+                <a href="data.html" data-page="data" class="nav-link text-gray-600 active-link">Data</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <!-- <button id="user-button" class="user-button">
+                    <span class="mr-2">👤</span> Profile
+                </button> -->
+                <a href="index.html">
+                <button id="logout-button" class="bg-red-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-red-600 transition duration-300">Logout</button>
+                    </a>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+       <main>
+            <h2>Prediction - Monthly View of AIML</h2>
+            <div class="card">
+                <div class="grid">
+                    <!-- Months -->
+                    <div class="month-box month-jan">
+                        <p>January</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            
+                        </div>
+                    </div>
+                    <div class="month-box month-feb">
+                        <p>February</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            
+                        </div>
+                    </div>
+                    <div class="month-box month-mar">
+                        <p>March</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            
+                        </div>
+                    </div>
+                    <div class="month-box month-apr">
+                        <p>April</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            
+                        </div>
+                    </div>
+                    <div class="month-box month-may">
+                        <p>May</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            
+                        </div>
+                    </div>
+                    <div class="month-box month-jun">
+                        <p>June</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            
+                        </div>
+                    </div>
+                    <div class="month-box month-jul">
+                        <p>July</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            
+                        </div>
+                    </div>
+                    <div class="month-box month-aug">
+                        <p>August</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            
+                        </div>
+                    </div>
+                    <div class="month-box month-sep">
+                        <p>September</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            
+                        </div>
+                    </div>
+                    <div class="month-box month-oct">
+                        <p>October</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            
+                        </div>
+                    </div>
+                    <div class="month-box month-nov">
+                        <p>November</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            
+                        </div>
+                    </div>
+                    <div class="month-box month-dec">
+                        <p>December</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

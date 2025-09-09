@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webside Dashboard</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+         <link rel="stylesheet" href="{% static '\faculty\style\pred.css' %}"> <!--pred.css-->
+
+</head>
+<body>
+
+    <!-- Main Page Container -->
+    <div id="main-page" class="flex flex-col w-full h-screen absolute top-0 left-0">
+        <!-- Taskbar -->
+        <header class="taskbar flex items-center justify-between px-10">
+            <h1 class="text-3xl font-extrabold text-blue-700">DropAlert</h1>
+            <nav class="flex space-x-6">
+                <!-- These links are now static and do not have any JavaScript functionality -->
+                <a href="{% url 'faculty_home' %}" data-page="home" class="nav-link text-gray-600">Home</a>
+                <a href="{% url 'faculty_prediction' %}" data-page="prediction" class="nav-link text-gray-600 active-link">Prediction</a>
+                <a href="{% url 'faculty_data' %}"data-page="data" class="nav-link text-gray-600">Data</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <!-- <button id="user-button" class="user-button">
+                    <span class="mr-2">👤</span> Profile
+                </button> -->
+                <a href="{% url 'faculty_index' %}">
+                <button id="logout-button" class="bg-red-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-red-600 transition duration-300">Logout</button>
+                    </a>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 p-10 overflow-auto">
+            <h2 class="text-4xl font-extrabold text-gray-800 mb-8">Prediction</h2>
+            <div id="content-area" class="card p-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Box 1 -->
+                     <a href="{% url 'faculty_branch_com' %}"> <!--branch/com.html-->
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center cursor-pointer transition duration-300 transform hover:scale-105 hover:shadow-xl">
+                        <img src="{% static '\faculty\image\computer.gif' %}" alt="Prediction 1 Placeholder" class="w-full h-auto rounded-lg mb-4"> <!--image/computer.gif-->
+                        <h3 class="text-xl font-semibold text-gray-800">COMPUTER</h3>
+                    </div>
+                     </a>
+                  
+                    
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

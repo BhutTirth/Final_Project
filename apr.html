@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webside Dashboard</title>
+    <!-- Use Inter font from Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap">
+    
+ <link rel="stylesheet" href="{% static '\faculty\style\upload.css' %}"> <!--faculty style upload.css-->
+</head>
+<body>
+
+    <!-- Main Page Container -->
+    <div id="main-page">
+        <!-- Taskbar -->
+        <header class="taskbar">
+            <h1>DropAlert</h1>
+            <a href="{% url 'faculty_branch_com' %}"> <!--faculty branch com.html-->
+                <div class="button-container">
+                    <button id="logout-button">Back</button>
+                </div>
+            </a>
+        </header>
+
+        <!-- Main Content Area -->
+        <main>
+            <h1 class="text-2xl md:text-4xl font-extrabold text-gray-800 mb-8">Prediction - Month April</h1>
+            <div class="button-grid">
+                <button class="action-button view-button">View</button>
+                <button class="action-button upload-button">Upload</button>
+                <button class="action-button download-button">Download</button>
+                <button class="action-button select-file-button" id="select-file-button">Predict</button>
+            </div>
+            
+            <!-- Hidden file input element -->
+            <input type="file" id="file-input" style="display: none;">
+
+            <!-- Element to display the selected file name -->
+            <p id="file-name" class="file-info"></p>
+        </main>
+    </div>
+
+    <script>
+        const selectFileButton = document.getElementById('select-file-button');
+        const fileInput = document.getElementById('file-input');
+        const fileNameDisplay = document.getElementById('file-name');
+
+        // When the "Select File" button is clicked, trigger the hidden file input.
+        selectFileButton.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // Listen for when a file is selected.
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                fileNameDisplay.textContent = `Selected file: ${file.name}`;
+            } else {
+                fileNameDisplay.textContent = 'No file selected.';
+            }
+        });
+    </script>
+</body>
+</html>

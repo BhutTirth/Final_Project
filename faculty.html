@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webside Dashboard</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+         <link rel="stylesheet" href="{% static '\admin\style\pred.css' %}"><!-- pred.css -->
+
+</head>
+<body>
+
+    <!-- Main Page Container -->
+    <div id="main-page" class="flex flex-col w-full h-screen absolute top-0 left-0">
+        <!-- Taskbar -->
+        <header class="taskbar flex items-center justify-between px-10">
+            <h1 class="text-3xl font-extrabold text-blue-700">DropAlert</h1>
+            <nav class="flex space-x-6">
+                <!-- These links are now static and do not have any JavaScript functionality -->
+                <a href="{% url  'admin_home' %}"   data-page="home" class="nav-link text-gray-600">Home</a>
+                <a href="{% url  'admin_prediction'%}" data-page="prediction" class="nav-link text-gray-600 ">Prediction</a>
+                <a href="{% url  'admin_data' %}" data-page="data" class="nav-link text-gray-600">Data</a>
+                <a href="{% url  'admin_faculty' %}" data-page="faculty" class="nav-link text-gray-600 active-link">Faculty Info</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <!-- <button id="user-button" class="user-button">
+                    <span class="mr-2">👤</span> Profile
+                </button> -->
+                <a href="{% url 'admin_index' %}">
+                <button id="logout-button" class="bg-red-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-red-600 transition duration-300">Logout</button>
+                    </a>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="p-6 sm:p-10">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Faculty Data</h2>
+                <div class="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
+                    <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-lg">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 text-left">
+                                    Number
+                                </th>
+                                <th class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 text-left">
+                                    Faculty Username
+                                </th>
+                                <th class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 text-left">
+                                    Faculty Password
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-100 transition-colors duration-200">
+                                <td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900">1</td>
+                                <td class="whitespace-nowrap px-6 py-4 text-gray-700">Avan patel</td>
+                                <td class="whitespace-nowrap px-6 py-4 text-gray-700">deadlock</td>
+                            </tr>
+                            <tr class="hover:bg-gray-100 transition-colors duration-200">
+                                <td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900">2</td>
+                                <td class="whitespace-nowrap px-6 py-4 text-gray-700">Dhruv</td>
+                                <td class="whitespace-nowrap px-6 py-4 text-gray-700">paradox</td>
+                            </tr>
+                            <tr class="hover:bg-gray-100 transition-colors duration-200">
+                                <td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900">3</td>
+                                <td class="whitespace-nowrap px-6 py-4 text-gray-700">Jeet Patel</td>
+                                <td class="whitespace-nowrap px-6 py-4 text-gray-700">jeet123</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

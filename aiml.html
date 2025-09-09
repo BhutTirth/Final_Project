@@ -1,0 +1,349 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webside Dashboard</title>
+    <!-- Use Inter font from Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6;
+        }
+
+        #main-page {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .taskbar {
+            background: #d8f1ff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+        }
+        
+        .taskbar h1 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #1d4ed8;
+        }
+
+        @media (min-width: 640px) {
+            .taskbar h1 {
+                font-size: 1.875rem;
+            }
+        }
+
+        .taskbar .user-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e0f2fe;
+            border-radius: 9999px;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e40af;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+
+        .taskbar .user-button:hover {
+            background-color: #bfdbfe;
+            transform: scale(1.05);
+        }
+
+        #logout-button {
+            background-color: #ef4444;
+            color: white;
+            font-weight: 700;
+            padding: 0.75rem 1rem;
+            font-size: 1.125rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+            line-height: 1; 
+            border: none;
+        }
+        
+        #logout-button:hover {
+            background-color: #dc2626;
+        }
+
+        main {
+            flex: 1;
+            padding: 1rem;
+            overflow: auto;
+        }
+        
+        @media (min-width: 640px) {
+            main {
+                padding: 2.5rem;
+            }
+        }
+
+        main h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 2rem;
+        }
+        
+        @media (min-width: 640px) {
+            main h2 {
+                font-size: 2.25rem;
+            }
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            padding: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .card {
+                padding: 2rem;
+            }
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 1.5rem;
+        }
+        
+        @media (min-width: 640px) {
+            .grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        .month-box {
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+            transform: scale(1.0);
+        }
+
+        .month-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .month-box p {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .button-container button {
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            border: none;
+        }
+
+        .view-button {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .view-button:hover {
+            background-color: #2563eb;
+            transform: scale(1.05);
+        }
+
+        .upload-button {
+            background-color: #9456e7;
+            color: white;
+        }
+
+        .upload-button:hover {
+            background-color: #7a44c2;
+            transform: scale(1.05);
+        }
+
+        .download-button {
+            background-color: #22c55e;
+            color: white;
+        }
+
+        .download-button:hover {
+            background-color: #16a34a;
+            transform: scale(1.05);
+        }
+
+        /* Unique colors for each month box */
+        .month-jan { background-color: #fca5a5; }
+        .month-feb { background-color: #fcd34d; }
+        .month-mar { background-color: #a7f3d0; }
+        .month-apr { background-color: #93c5fd; }
+        .month-may { background-color: #d8b4fe; }
+        .month-jun { background-color: #f9a8d4; }
+        .month-jul { background-color: #bfdbfe; }
+        .month-aug { background-color: #a5f3fc; }
+        .month-sep { background-color: #c4b5fd; }
+        .month-oct { background-color: #fbcfe8; }
+        .month-nov { background-color: #bbf7d0; }
+        .month-dec { background-color: #fef08a; }
+    </style>
+</head>
+<body>
+
+    <!-- Main Page Container -->
+    <div id="main-page">
+        <!-- Taskbar -->
+        <header class="taskbar">
+            <h1>DropAlert</h1>
+            <a href="{% url 'faculty_prediction' %}"> <!--faculty prediction.html-->
+                <div class="button-container">
+                    <button id="logout-button">Back</button>
+                </div>
+            </a>
+        </header>
+
+        <!-- Main Content Area -->
+        <main>
+            <h2>Prediction - Monthly View of Computer</h2>
+            <div class="card">
+                <div class="grid">
+                    <!-- Months -->
+                    <div class="month-box month-jan">
+                        <p>January</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            <button class="upload-button">Upload</button>
+                            <button class="download-button">Download</button>
+                        </div>
+                    </div>
+                    <div class="month-box month-feb">
+                        <p>February</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            <button class="upload-button">Upload</button>
+                            <button class="download-button">Download</button>
+                        </div>
+                    </div>
+                    <div class="month-box month-mar">
+                        <p>March</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            <button class="upload-button">Upload</button>
+                            <button class="download-button">Download</button>
+                        </div>
+                    </div>
+                    <div class="month-box month-apr">
+                        <p>April</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            <button class="upload-button">Upload</button>
+                            <button class="download-button">Download</button>
+                        </div>
+                    </div>
+                    <div class="month-box month-may">
+                        <p>May</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            <button class="upload-button">Upload</button>
+                            <button class="download-button">Download</button>
+                        </div>
+                    </div>
+                    <div class="month-box month-jun">
+                        <p>June</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            <button class="upload-button">Upload</button>
+                            <button class="download-button">Download</button>
+                        </div>
+                    </div>
+                    <div class="month-box month-jul">
+                        <p>July</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            <button class="upload-button">Upload</button>
+                            <button class="download-button">Download</button>
+                        </div>
+                    </div>
+                    <div class="month-box month-aug">
+                        <p>August</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            <button class="upload-button">Upload</button>
+                            <button class="download-button">Download</button>
+                        </div>
+                    </div>
+                    <div class="month-box month-sep">
+                        <p>September</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            <button class="upload-button">Upload</button>
+                            <button class="download-button">Download</button>
+                        </div>
+                    </div>
+                    <div class="month-box month-oct">
+                        <p>October</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            <button class="upload-button">Upload</button>
+                            <button class="download-button">Download</button>
+                        </div>
+                    </div>
+                    <div class="month-box month-nov">
+                        <p>November</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            <button class="upload-button">Upload</button>
+                            <button class="download-button">Download</button>
+                        </div>
+                    </div>
+                    <div class="month-box month-dec">
+                        <p>December</p>
+                        <div class="button-container">
+                            <button class="view-button">View</button>
+                            <button class="upload-button">Upload</button>
+                            <button class="download-button">Download</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

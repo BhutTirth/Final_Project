@@ -1,132 +1,233 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webside Dashboard</title>
-    <!-- Tailwind CSS CDN for styling -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="{% static '\faculty\style\data.css' %}"><!--data.css-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #1a202c;
+            --card-color: #2d3748;
+            --text-color: #e2e8f0;
+            --accent-color: #22c55e; /* Vibrant green */
+            --accent-light: #4ade80;
+            --nav-link-color: #a0aec0;
+            --active-nav-link: #ffffff;
+            --active-nav-line: #22c55e;
+            --logout-bg: #fca5a5;
+            --logout-hover-bg: #ef4444;
+        }
 
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 1rem;
+        }
+
+        #main-page {
+            background-color: var(--bg-color);
+        }
+
+        /* Taskbar Styling */
+        .taskbar {
+            background: rgba(45, 55, 72, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        
+        .taskbar h1 {
+            color: var(--accent-color);
+            text-shadow: 0 0 5px rgba(34, 197, 94, 0.5);
+            font-weight: 800;
+        }
+
+        .nav-link {
+            color: var(--nav-link-color);
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--active-nav-link);
+        }
+
+        .active-link {
+            color: var(--active-nav-link);
+            font-weight: 700;
+        }
+
+        .active-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--active-nav-line);
+            border-radius: 1px;
+        }
+
+        .user-button, #logout-button {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        #logout-button {
+            background-color: var(--logout-bg);
+            color: #444;
+        }
+
+        #logout-button:hover {
+            background-color: var(--logout-hover-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Main Content Styling */
+        main {
+            /* Adjusted padding to prevent content from merging with the fixed header */
+            padding-top: 100px; 
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto; /* Center the main content */
+            padding-bottom: 2rem;
+            text-align: center;
+        }
+
+        main h2 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--card-color);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        /* Updated Grid for 3 boxes in a row on large screens */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr); /* Default for mobile */
+            gap: 1.5rem;
+            justify-content: center;
+        }
+        @media (min-width: 768px) { /* On medium screens and up */
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .month-box {
+            /* Changed background color to a vibrant green */
+            background: #10b981;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .month-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .month-box p {
+            /* Increased font size for better visibility */
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0;
+        }
+
+    </style>
 </head>
 <body>
-
-    <!-- Main Page Container -->
     <div id="main-page" class="flex flex-col w-full h-screen absolute top-0 left-0">
         <!-- Taskbar -->
         <header class="taskbar flex items-center justify-between px-10">
             <h1 class="text-3xl font-extrabold text-blue-700">DropAlert</h1>
             <nav class="flex space-x-6">
-                <!-- These links are now static and do not have any JavaScript functionality -->
-                <a href="{% url 'faculty_home' %}" data-page="home" class="nav-link text-gray-600">Home</a> <!--home.html-->
-                <a href="{% url 'faculty_prediction' %}" data-page="prediction" class="nav-link text-gray-600">Prediction</a> <!--prediction.html-->
-                <a href="{% url 'faculty_data' %}" data-page="data" class="nav-link text-gray-600 active-link">Data</a> <!--data.html-->
+                <a href="/admin/home.html" data-page="home" class="nav-link">Home</a>
+                <a href="/admin/prediction.html" data-page="prediction" class="nav-link">Prediction</a>
+                <a href="/admin/data.html" data-page="data" class="nav-link active-link">Data</a>
+                <a href="/admin/faculty.html" data-page="faculty" class="nav-link">Faculty Info</a>
             </nav>
             <div class="flex items-center space-x-4">
-                <!-- <button id="user-button" class="user-button">
-                    <span class="mr-2">👤</span> Profile
-                </button> -->
-                <a href="{% url 'faculty_index' %}" > <!--index.html-->
+                <!-- Changed Logout to a standalone button -->
                 <button id="logout-button" class="bg-red-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-red-600 transition duration-300">Logout</button>
-                    </a>
             </div>
         </header>
 
         <!-- Main Content Area -->
-       <main>
-            <h2>Prediction - Monthly View of AIML</h2>
+        <main>
+            <h2>Data </h2>
             <div class="card">
                 <div class="grid">
-                    <!-- Months -->
-                    <div class="month-box month-jan">
-                        <p>January</p>
-                        <div class="button-container">
-                            <button class="view-button">View</button>
-                            
-                        </div>
+                    
+                     <a href="/admin/datas/comp.html">
+                    <div class="month-box">
+                        <p>COMPUTER</p>
                     </div>
-                    <div class="month-box month-feb">
-                        <p>February</p>
-                        <div class="button-container">
-                            <button class="view-button">View</button>
-                            
-                        </div>
+                     </a>
+
+                    <a href="/admin/datas/aiml.html">
+                    <div class="month-box">
+                        <p>AIML</p>
                     </div>
-                    <div class="month-box month-mar">
-                        <p>March</p>
-                        <div class="button-container">
-                            <button class="view-button">View</button>
-                            
-                        </div>
+                    </a>
+
+                    <a href="/admin/datas/mack.html">
+                    <div class="month-box">
+                        <p>MECHANICAL</p>
                     </div>
-                    <div class="month-box month-apr">
-                        <p>April</p>
-                        <div class="button-container">
-                            <button class="view-button">View</button>
-                            
-                        </div>
+                    </a>
+
+                    <a href="/admin/datas/it.html">
+                    <div class="month-box">
+                        <p>IT</p>
                     </div>
-                    <div class="month-box month-may">
-                        <p>May</p>
-                        <div class="button-container">
-                            <button class="view-button">View</button>
-                            
-                        </div>
+                    </a>
+
+                    <a href="/admin/datas/civil.html">
+                    <div class="month-box">
+                        <p>CIVIL</p>
                     </div>
-                    <div class="month-box month-jun">
-                        <p>June</p>
-                        <div class="button-container">
-                            <button class="view-button">View</button>
-                            
-                        </div>
+                    </a>
+
+                    <a href="/admin/datas/auto.html">
+                    <div class="month-box">
+                        <p>AUTOMOBILE</p>
                     </div>
-                    <div class="month-box month-jul">
-                        <p>July</p>
-                        <div class="button-container">
-                            <button class="view-button">View</button>
-                            
-                        </div>
-                    </div>
-                    <div class="month-box month-aug">
-                        <p>August</p>
-                        <div class="button-container">
-                            <button class="view-button">View</button>
-                            
-                        </div>
-                    </div>
-                    <div class="month-box month-sep">
-                        <p>September</p>
-                        <div class="button-container">
-                            <button class="view-button">View</button>
-                            
-                        </div>
-                    </div>
-                    <div class="month-box month-oct">
-                        <p>October</p>
-                        <div class="button-container">
-                            <button class="view-button">View</button>
-                            
-                        </div>
-                    </div>
-                    <div class="month-box month-nov">
-                        <p>November</p>
-                        <div class="button-container">
-                            <button class="view-button">View</button>
-                            
-                        </div>
-                    </div>
-                    <div class="month-box month-dec">
-                        <p>December</p>
-                        <div class="button-container">
-                            <button class="view-button">View</button>
-                            
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </main>
     </div>
-
 </body>
 </html>

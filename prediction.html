@@ -7,7 +7,7 @@
     <title>Webside Dashboard</title>
     <!-- Tailwind CSS CDN for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-         <link rel="stylesheet" href="{% static '\faculty\style\pred.css' %}"> <!--pred.css-->
+         <link rel="stylesheet" href="{% static '\myadmin\style\pred.css' %}">
 
 </head>
 <body>
@@ -19,15 +19,16 @@
             <h1 class="text-3xl font-extrabold text-blue-700">DropAlert</h1>
             <nav class="flex space-x-6">
                 <!-- These links are now static and do not have any JavaScript functionality -->
-                <a href="{% url 'faculty_home' %}" data-page="home" class="nav-link text-gray-600">Home</a>
-                <a href="{% url 'faculty_prediction' %}" data-page="prediction" class="nav-link text-gray-600 active-link">Prediction</a>
-                <a href="{% url 'faculty_data' %}"data-page="data" class="nav-link text-gray-600">Data</a>
+                <a href="{% url 'myadmin_home' %}" data-page="home" class="nav-link text-gray-600">Home</a>
+                <a href="{% url 'myadmin_prediction' %}" data-page="prediction" class="nav-link text-gray-600 active-link">Prediction</a>
+                <a href="{% url 'myadmin_data' %}"  data-page="data" class="nav-link text-gray-600">Data</a>
+                <a href="{% url 'myadmin_faculty' %}" data-page="faculty" class="nav-link text-gray-600">Faculty Info</a>
             </nav>
             <div class="flex items-center space-x-4">
                 <!-- <button id="user-button" class="user-button">
                     <span class="mr-2">👤</span> Profile
                 </button> -->
-                <a href="{% url 'faculty_index' %}">
+                <a href="{% url 'myadmin_index' %}">
                 <button id="logout-button" class="bg-red-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-red-600 transition duration-300">Logout</button>
                     </a>
             </div>
@@ -39,14 +40,47 @@
             <div id="content-area" class="card p-8">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Box 1 -->
-                     <a href="{% url 'faculty_branch_com' %}"> <!--branch/com.html-->
+                     <a href="{% url 'myadmin_branch_com' %}"> <!--com.html-->
                     <div class="bg-white p-6 rounded-xl shadow-lg text-center cursor-pointer transition duration-300 transform hover:scale-105 hover:shadow-xl">
-                        <img src="{% static '\faculty\image\computer.gif' %}" alt="Prediction 1 Placeholder" class="w-full h-auto rounded-lg mb-4"> <!--image/computer.gif-->
+                        <img src="{% static '\myadmin\image\computer.gif' %}" alt="Prediction 1 Placeholder" class="w-full h-auto rounded-lg mb-4"> <!--image/computer.gif-->
                         <h3 class="text-xl font-semibold text-gray-800">COMPUTER</h3>
                     </div>
                      </a>
-                  
-                    
+                    <!-- Box 2 -->
+                     <a href="{% url 'myadmin_branch_aiml' %}"> <!--aiml.html-->
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center cursor-pointer transition duration-300 transform hover:scale-105 hover:shadow-xl">
+                        <img src="{% static '\myadmin\image\computer.gif' %}"  alt="Prediction 2 Placeholder" class="w-full h-auto rounded-lg mb-4"><!--image/computer.gif-->
+                        <h3 class="text-xl font-semibold text-gray-800">AIML</h3>
+                    </div>
+                    </a>
+                    <!-- Box 3 -->
+                     <a href="{% url 'myadmin_branch_mech' %}"><!--mech.html-->
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center cursor-pointer transition duration-300 transform hover:scale-105 hover:shadow-xl">
+                        <img src="{% static '\myadmin\image\computer.gif' %}"  alt="Prediction 3 Placeholder" class="w-full h-auto rounded-lg mb-4"><!--image/computer.gif-->
+                        <h3 class="text-xl font-semibold text-gray-800">MECHANICAL</h3>
+                    </div>
+                     </a>
+                    <!-- Box 4 -->
+                     <a href="{% url 'myadmin_branch_it' %}"><!--it.html-->
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center cursor-pointer transition duration-300 transform hover:scale-105 hover:shadow-xl">
+                        <img src="{% static '\myadmin\image\computer.gif' %}"  alt="Prediction 4 Placeholder" class="w-full h-auto rounded-lg mb-4"><!--image/computer.gif-->
+                        <h3 class="text-xl font-semibold text-gray-800">IT</h3>
+                    </div>
+                     </a>
+                    <!-- Box 5 -->
+                     <a href="{% url 'myadmin_branch_civil' %}"><!--civil.html-->
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center cursor-pointer transition duration-300 transform hover:scale-105 hover:shadow-xl">
+                        <img src="{% static '\myadmin\image\computer.gif' %}"  alt="Prediction 5 Placeholder" class="w-full h-auto rounded-lg mb-4"><!--image/computer.gif-->
+                        <h3 class="text-xl font-semibold text-gray-800">CIVIL</h3>
+                    </div>
+                     </a>
+                    <!-- Box 6 -->
+                     <a href="{% url 'myadmin_branch_auto' %}"><!--auto.html-->
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center cursor-pointer transition duration-300 transform hover:scale-105 hover:shadow-xl">
+                        <img src="{% static '\myadmin\image\computer.gif' %}"  alt="Prediction 6 Placeholder" class="w-full h-auto rounded-lg mb-4"><!--image/computer.gif-->
+                        <h3 class="text-xl font-semibold text-gray-800">AUTOMOBILE</h3>
+                    </div>
+                    </a>
                 </div>
             </div>
         </main>

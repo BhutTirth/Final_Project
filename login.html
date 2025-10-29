@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Login</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
+        body {
+            height:100vh; display:flex; justify-content:center; align-items:center;
+            background: linear-gradient(135deg, #1f2937, #2563eb);
+        }
+        .login-container {
+            background-color:#fff; padding:40px; border-radius:12px; width:350px;
+            box-shadow:0px 8px 20px rgba(0,0,0,0.2);
+        }
+        .login-container h2 { text-align:center; margin-bottom:30px; color:#111827; }
+        .login-container form { display:flex; flex-direction:column; }
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            padding:12px 15px; margin-bottom:20px; border-radius:8px; border:1px solid #ccc; font-size:1em;
+        }
+        .login-container input[type="submit"] {
+            padding:12px; background-color:#2563eb; color:#fff; border:none; border-radius:8px; font-size:1em; cursor:pointer;
+            transition: background 0.3s;
+        }
+        .login-container input[type="submit"]:hover { background-color:#1e40af; }
+        .login-container .forgot-password { text-align:center; margin-top:15px; font-size:0.9em; }
+        .login-container .forgot-password a { color:#2563eb; text-decoration:none; }
+        .login-container .forgot-password a:hover { text-decoration:underline; }
+        .error { color:red; text-align:center; margin-bottom:15px; }
+        @media (max-width:400px){ .login-container{ width:90%; padding:30px; } }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Developer Login</h2>
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+        <form method="POST" action="{% url 'dev_login' %}">
+            {% csrf_token %}
+            <input type="text" name="dev_username" placeholder="Developer Username" required>
+            <input type="password" name="dev_password" placeholder="Developer Password" required>
+            <input type="submit" value="Login">
+        </form>
+        <div class="forgot-password">
+            <a href="#">Forgot Password?</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,9 +1,9 @@
+# models.py
 from django.db import models
 
-class myadmin(models.Model):
-    myadmin_id = models.AutoField(primary_key=True)   # Auto increment primary key
-    username = models.CharField(max_length=100, unique=True)  # Unique username
-    password = models.CharField(max_length=255)    # Store password (hashed later)
+class Dev(models.Model):
+    dev_username = models.CharField(max_length=100, unique=True)
+    dev_password = models.CharField(max_length=100)  # Store hashed password in production
 
     def __str__(self):
-        return self.username
+        return self.dev_username

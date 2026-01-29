@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Data</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #999;
+            font-size: 16px;
+        }
+        th {
+            background: #4e73df;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Data for {{ month|title }} — {{ upload_date }}</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>P_ID</th>
+            <th>NAME</th>
+            <th>REASON</th>
+            <th>ADVICE</th>                       
+            <th>S_ID</th>
+            <th>EN_NO</th>
+            <th>D_ID</th>
+            <th>Upload_date</th>
+            <th>Month</th>
+            <th>Branch</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for r in predictions %}
+        <tr>
+            <td>{{ r.P_ID }}</td>
+            <td>{{ r.S_ID.S_NAME}}</td>
+            <td>{{ r.REASON }}</td>
+            <td>{{ r.ADVICE }}</td>
+            <td>{{ r.S_ID }}</td>
+            <td>{{r.S_ID.EN_NO}}</td>                        
+            <td>{{ r.D_ID }}</td>
+            <td>{{ r.Upload_date }}</td>
+            <td>{{ r.Month }}</td>
+            <td>{{ r.Branch.B_NAME }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>

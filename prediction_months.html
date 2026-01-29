@@ -1,0 +1,232 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction - {{ branch.B_NAME }}</title>
+
+    <link rel="stylesheet" href="{% static 'myadmin/style/month.css' %}">
+    <style>
+    .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(192, 192, 192, 0.5);  /* white transparent */
+    backdrop-filter: blur(10px);            /* main blur */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Glass box — light, smooth, modern */
+.modal-box {
+    background: rgba(192, 192, 192, 0.5);     /* subtle white */
+    backdrop-filter: blur(20px);              /* stronger blur inside */
+    padding: 25px 30px;
+    border-radius: 20px;
+    width: 330px;
+    text-align: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+
+    animation: scaleIn 0.25s ease-out;
+}
+
+/* Modal Title */
+.modal-box h3 {
+    color: #1e3a8a;   /* nice dark-blue heading */
+    font-size: 22px;
+    margin-bottom: 14px;
+    font-weight: 700;
+}
+
+/* Dropdown */
+.modal-box select {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    outline: none;
+    color: #1f2937;
+
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Buttons */
+.modal-buttons {
+    margin-top: 18px;
+}
+
+.modal-buttons button {
+    margin: 5px;
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* OK Button */
+.modal-buttons button:first-child {
+    background: #1e3a8a;
+    color: white;
+}
+.modal-buttons button:first-child:hover {
+    background: #2563eb;
+}
+
+/* Cancel Button */
+.modal-buttons button:last-child {
+    background: #e5e7eb;
+    color: #111;
+}
+.modal-buttons button:last-child:hover {
+    background: #d1d5db;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.85); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+    </style>
+</head>
+
+<body>
+        <!-- Main Page Container -->
+            <div id="main-page" class="flex flex-col w-full min-h-screen">
+                <!-- Taskbar -->
+                <header class="taskbar">
+                    <div class="navbar-inner">
+                        <div class="navbar-left">
+                            <img 
+                                src="{% static 'myadmin/image/logo.png' %}" 
+                                alt="DropAlert Logo"
+                                class="navbar-logo"
+                            >
+                        </div>
+
+                        <div class="navbar-right">
+                            <a href="{% url 'myadmin:myadmin_prediction' %}">
+                                <button id="logout-button">Back</button>
+                            </a>
+                        </div>
+                    </div>
+                </header>
+
+        
+
+   <main class="flex-1 p-10 overflow-auto">
+
+        <h2>{{ branch.B_NAME }} — Monthly Prediction</h2>
+
+        <div class="card">
+            <div class="grid">
+
+                {% for m in months %}
+                <div class="month-box">
+                    <p>{{ m.name }}</p>
+
+                    <div class="button-container">
+
+                        <button class="view-button"
+                                onclick="openModal('{{ branch.B_ID }}','{{ m.num }}','view')">
+                            View
+                        </button>
+
+                        <button class="download-button"
+                                onclick="openModal('{{ branch.B_ID }}','{{ m.num }}','download')">
+                            Download
+                        </button>
+
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- POPUP -->
+<div id="popup" class="modal-overlay" style="display:none;">
+    <div class="modal-box">
+
+        <h3>Select Upload Date</h3>
+
+        <form method="POST" action="{% url 'myadmin:prediction_action' %}">
+            {% csrf_token %}
+
+            <input type="hidden" name="branch" id="branch_input">
+            <input type="hidden" name="month" id="month_input">
+            <input type="hidden" name="action" id="action_input">
+
+            <select name="Upload_date" required>
+                {% for d in dates %}
+                    <option value="{{ d|date:'c' }}">{{ d|date:"Y-m-d H:i" }}</option>
+                {% endfor %}
+            </select>
+
+            <div class="modal-buttons">
+                <button type="submit">OK</button>
+                <button type="button" onclick="closeModal()">Cancel</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<script>
+function openModal(branch, month, actionType) {
+
+    document.getElementById("branch_input").value = branch;
+    document.getElementById("month_input").value = month;
+    document.getElementById("action_input").value = actionType;
+
+    let dropdown = document.querySelector("#popup select");
+    dropdown.innerHTML = "<option>Loading...</option>";
+
+    // FIXED URL ↓↓↓
+    fetch(`/prediction/load_dates/?branch=${branch}&month=${month}`)
+        .then(response => response.json())
+        .then(data => {
+            dropdown.innerHTML = "";  
+
+            if (data.dates.length === 0) {
+                dropdown.innerHTML = "<option>No records</option>";
+                return;
+            }
+
+            data.dates.forEach(dateValue => {
+                let formatted = new Date(dateValue).toLocaleString();
+                dropdown.innerHTML += `<option value="${dateValue}">${formatted}</option>`;
+            });
+        });
+
+    document.getElementById("popup").style.display = "flex";
+}
+function closeModal() {
+    document.getElementById("popup").style.display = "none";
+}
+
+</script>
+
+</body>
+</html>

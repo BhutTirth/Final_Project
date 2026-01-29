@@ -4,35 +4,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webside Dashboard</title>
+    <title>Predictions Page</title>
     <!-- Tailwind CSS CDN for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-         <link rel="stylesheet" href="{% static '\myadmin\style\pred.css' %}">
+         <link rel="stylesheet" href="{% static '/myadmin/style/home.css' %}">
 
 </head>
-<body>
-
-    <!-- Main Page Container -->
+<body class="bg-gray-100 min-h-screen">
+<!-- Main Page Container -->
     <div id="main-page" class="flex flex-col w-full h-screen absolute top-0 left-0">
         <!-- Taskbar -->
         <header class="taskbar flex items-center justify-between px-10">
-            <h1 class="text-3xl font-extrabold text-blue-700">DropAlert</h1>
+            <div class="flex items-center gap-3">
+    <img 
+        src="{% static 'myadmin/image/logo.png' %}" 
+        alt="DropAlert Logo"
+        class="navbar-logo"
+    >
+</div>
+ 
             <nav class="flex space-x-6">
-                <!-- These links are now static and do not have any JavaScript functionality -->
-                <a href="{% url 'myadmin_home' %}" data-page="home" class="nav-link text-gray-600">Home</a>
-                <a href="{% url 'myadmin_prediction' %}" data-page="prediction" class="nav-link text-gray-600 active-link">Prediction</a>
-                <a href="{% url 'myadmin_data' %}"  data-page="data" class="nav-link text-gray-600">Data</a>
-                <a href="{% url 'myadmin_faculty' %}" data-page="faculty" class="nav-link text-gray-600">Faculty Info</a>
+                 
+                <a href="{% url 'myadmin:myadmin_home' %}" data-page="home" class="nav-link">Home</a>
+                <a href="{% url 'myadmin:branch_list' %}" data-page="Branch"class="nav-link ">Branches</a>
+                <a href="{% url 'myadmin:myadmin_data' %}" data-page="data" class="nav-link ">Datasets</a>
+                <a href="{% url 'myadmin:myadmin_faculty' %}" data-page="faculty" class="nav-link">Faculty Details</a>
+                <a href="{% url 'myadmin:student_list' %}" data-page="Student" class="nav-link ">Student Details</a>
+                <a href="{% url 'myadmin:myadmin_prediction' %}" data-page="prediction" class="nav-link active-link ">Predictions</a>
+                <a href="{% url 'myadmin:admin_messages' %}"class="nav-link ">Messenger</a>     
+               
             </nav>
-            <div class="flex items-center space-x-4">
+
+<div class="flex items-center space-x-4">
                 <!-- <button id="user-button" class="user-button">
                     <span class="mr-2">👤</span> Profile
                 </button> -->
-                <a href="{% url 'myadmin_index' %}">
-                <button id="logout-button" class="bg-red-500 text-white font-bold py-2 px-5 rounded-lg hover:bg-red-600 transition duration-300">Logout</button>
+                <a href="{% url 'myadmin:myadmin_index' %}">
+                <button id="logout-button"  class="font-semibold py-2 px-5 rounded-lg transition">Logout</button>
                     </a>
             </div>
         </header>
+
 
         <!-- Main Content Area -->
         <main class="flex-1 p-10 overflow-auto">
@@ -40,47 +52,18 @@
             <div id="content-area" class="card p-8">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Box 1 -->
-                     <a href="{% url 'myadmin_branch_com' %}"> <!--com.html-->
-                    <div class="bg-white p-6 rounded-xl shadow-lg text-center cursor-pointer transition duration-300 transform hover:scale-105 hover:shadow-xl">
-                        <img src="{% static '\myadmin\image\computer.gif' %}" alt="Prediction 1 Placeholder" class="w-full h-auto rounded-lg mb-4"> <!--image/computer.gif-->
-                        <h3 class="text-xl font-semibold text-gray-800">COMPUTER</h3>
-                    </div>
-                     </a>
-                    <!-- Box 2 -->
-                     <a href="{% url 'myadmin_branch_aiml' %}"> <!--aiml.html-->
-                    <div class="bg-white p-6 rounded-xl shadow-lg text-center cursor-pointer transition duration-300 transform hover:scale-105 hover:shadow-xl">
-                        <img src="{% static '\myadmin\image\computer.gif' %}"  alt="Prediction 2 Placeholder" class="w-full h-auto rounded-lg mb-4"><!--image/computer.gif-->
-                        <h3 class="text-xl font-semibold text-gray-800">AIML</h3>
-                    </div>
-                    </a>
-                    <!-- Box 3 -->
-                     <a href="{% url 'myadmin_branch_mech' %}"><!--mech.html-->
-                    <div class="bg-white p-6 rounded-xl shadow-lg text-center cursor-pointer transition duration-300 transform hover:scale-105 hover:shadow-xl">
-                        <img src="{% static '\myadmin\image\computer.gif' %}"  alt="Prediction 3 Placeholder" class="w-full h-auto rounded-lg mb-4"><!--image/computer.gif-->
-                        <h3 class="text-xl font-semibold text-gray-800">MECHANICAL</h3>
-                    </div>
-                     </a>
-                    <!-- Box 4 -->
-                     <a href="{% url 'myadmin_branch_it' %}"><!--it.html-->
-                    <div class="bg-white p-6 rounded-xl shadow-lg text-center cursor-pointer transition duration-300 transform hover:scale-105 hover:shadow-xl">
-                        <img src="{% static '\myadmin\image\computer.gif' %}"  alt="Prediction 4 Placeholder" class="w-full h-auto rounded-lg mb-4"><!--image/computer.gif-->
-                        <h3 class="text-xl font-semibold text-gray-800">IT</h3>
-                    </div>
-                     </a>
-                    <!-- Box 5 -->
-                     <a href="{% url 'myadmin_branch_civil' %}"><!--civil.html-->
-                    <div class="bg-white p-6 rounded-xl shadow-lg text-center cursor-pointer transition duration-300 transform hover:scale-105 hover:shadow-xl">
-                        <img src="{% static '\myadmin\image\computer.gif' %}"  alt="Prediction 5 Placeholder" class="w-full h-auto rounded-lg mb-4"><!--image/computer.gif-->
-                        <h3 class="text-xl font-semibold text-gray-800">CIVIL</h3>
-                    </div>
-                     </a>
-                    <!-- Box 6 -->
-                     <a href="{% url 'myadmin_branch_auto' %}"><!--auto.html-->
-                    <div class="bg-white p-6 rounded-xl shadow-lg text-center cursor-pointer transition duration-300 transform hover:scale-105 hover:shadow-xl">
-                        <img src="{% static '\myadmin\image\computer.gif' %}"  alt="Prediction 6 Placeholder" class="w-full h-auto rounded-lg mb-4"><!--image/computer.gif-->
-                        <h3 class="text-xl font-semibold text-gray-800">AUTOMOBILE</h3>
-                    </div>
-                    </a>
+                   {% for b in branches %}
+<a href="{% url 'myadmin:prediction_months' b.B_ID %}">
+    <div class="bg-white p-6 rounded-xl shadow-lg text-center cursor-pointer transition duration-300 transform hover:scale-105 hover:shadow-xl">
+       {% if b.B_IMAGE  %}
+        <img src="{{b.B_IMAGE.url}}" class="w-full h-60 object-cover rounded-lg mb-4">
+       {% else %} 
+        <img src="{% static 'myadmin/image/computer.gif' %}"class="w-full h-auto object-cover rounded-lg mb-4">
+         {% endif %} 
+        <h3 class="text-xl font-semibold text-gray-800">{{ b.B_NAME|upper }}</h3>
+    </div>
+</a>
+{% endfor %}
                 </div>
             </div>
         </main>
